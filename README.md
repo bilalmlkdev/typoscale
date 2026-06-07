@@ -273,4 +273,4 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/):
 
 ## License
 
-MIT © 2024 - see [LICENSE](LICENSE) for details.
+MIT © 2026 - see [LICENSE](LICENSE) for details.
