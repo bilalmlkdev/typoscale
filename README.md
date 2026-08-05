@@ -1,276 +1,281 @@
-# <a href="https://typoscale.vercel.app" target="_blank">TypoScale - Type Scale Generator</a>
-
-> Generate beautiful type scales, pair Google Fonts, and export ready-to-use CSS & Tailwind tokens.
-
-<p align="left">
-  <img src="https://img.shields.io/badge/Status-active-amber?style=flat&color=9B72FF" />
-  <img src="https://img.shields.io/badge/Built%20with-React%20%2B%20Vite-9B72FF?style=flat" />
-  <img src="https://img.shields.io/badge/Styling-Tailwind%20CSS-9B72FF?style=flat" />
-  <img src="https://img.shields.io/badge/License-MIT-9B72FF?style=flat" />
-  <img src="https://img.shields.io/badge/TypeScript-strict-9B72FF?style=flat" />
-  <img src="https://img.shields.io/badge/Deployed%20on-Vercel-9B72FF?style=flat" />
+<p align="center">
+  <a href="https://typoscale.vercel.app/">
+    <img src="./src/assets/preview.png" alt="TypoScale Preview">
+  </a>
 </p>
 
-[![Visit TypoScale](https://img.shields.io/badge/Live%20Demo-typoscale-9B72FF?style=flat)](https://typoscale.vercel.app)
+<h1 align="center">TypoScale</h1>
 
-<img width="100%" alt="TypoScale Preview" src="./src/assets/previews/preview1.png" />
-<br />
-<!-- <img width="100%" alt="TypoScale Preview" src="./src/assets/previews/Preview2.png" /> -->
+<p align="center">
+  A modern, open-source type scale generator for designers and developers.
+  Generate harmonious typography systems, pair Google Fonts, and export production-ready
+  CSS & Tailwind tokens from one fast browser-based workspace.
+</p>
 
-⭐ **Star this repo** if TypoScale saved you from hand-calculating `1.333rem` for the hundredth time.
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Active-9B26FF?style=flat" />
+  <img src="https://img.shields.io/badge/React-Vite-9B26FF?style=flat" />
+  <img src="https://img.shields.io/badge/Tailwind-v4-9B26FF?style=flat" />
+  <img src="https://img.shields.io/badge/TypeScript-Strict-9B26FF?style=flat" />
+  <img src="https://img.shields.io/badge/License-MIT-9B26FF?style=flat" />
+  <img src="https://img.shields.io/badge/Deploy-Vercel-9B26FF?style=flat" />
+</p>
 
----
-
-## What is TypoScale?
-
-TypoScale is a **browser-based type scale generator** for designers and developers who build design systems. Pick a base size, choose a modular ratio, pair Google Fonts, and get production-ready tokens in CSS, Tailwind v3/v4, or Style Dictionary JSON — all in one place, with a live editorial preview that shows exactly what your scale looks like in real fonts.
-
-No sign-up. No backend. Fully open source.
-
----
-
-## Features
-
-**Scale generation**
-- Modular ratios — Minor Second, Major Second, Minor Third, Major Third, Perfect Fourth, Augmented Fourth, Perfect Fifth, Golden Ratio, and any custom ratio
-- Set a custom base size (default 16px)
-- Add steps above and below the base independently
-
-**Font pairing**
-- Search and preview 1000+ Google Fonts by category
-- Separate pickers for display, body, and monospace
-- Fonts load on demand — no bloat
-
-**Live preview**
-- Editorial layout showing every scale step in your chosen fonts
-- WCAG AA/AAA contrast badges per step
-- Responsive fluid preview — drag to resize and see how the scale behaves
-
-**Token export — four formats**
-- CSS Custom Properties
-- Tailwind CSS v3 (`theme.extend.fontSize`)
-- Tailwind CSS v4 (`@theme`)
-- Style Dictionary JSON
-- One-click copy or download per format
-
-**Developer experience**
-- Shareable URLs — full scale config encoded in query params
-- Dark and light mode
-- Zero dependencies on your end — just open and use
+<p align="center">
+  <a href="https://typoscale.vercel.app/">Live Demo</a> •
+  <a href="https://github.com/byllzz/typoscale/issues/new">Report Bug</a> •
+  <a href="https://github.com/byllzz/typoscale/issues/new">Request Feature</a>
+</p>
 
 ---
 
-## Quick start
+# About
 
-```bash
-# 1. Clone
-git clone https://github.com/byllzz/typoscale.git
-cd typoscale
+TypoScale is an open-source type scale generator built for designers and developers creating modern design systems.
 
-# 2. Install
-npm install
+Choose a base font size, select a modular ratio, pair Google Fonts, preview typography in real time, and export production-ready tokens for CSS, Tailwind CSS, or Style Dictionary.
 
-# 3. Add your Google Fonts API key (optional — falls back to curated list of 28 fonts)
-cp .env.local.example .env.local
-# Edit .env.local → VITE_GOOGLE_FONTS_KEY=your_key_here
+Unlike traditional font calculators, TypoScale combines modular scaling, responsive typography, WCAG contrast checking, and live editorial previews into a single workflow.
 
-# 4. Start dev server
-npm run dev
+Everything runs entirely inside your browser with no server-side processing or tracking.
+
+---
+
+# Features
+
+- **Type Scale Generation** - Modular ratios, custom scales, independent steps, and instant px/rem conversion.
+- **Font Pairing** - Browse 1000+ Google Fonts with dedicated Display, Body, and Monospace selectors.
+- **Live Preview** - Responsive editorial preview with WCAG AA/AAA accessibility indicators.
+- **Token Export** - Export typography tokens as CSS Variables, Tailwind CSS v3/v4, or Style Dictionary JSON.
+- **Developer Experience** - Shareable URLs, dark & light themes, instant copy, and client-side processing.
+- **Utilities** - Fluid `clamp()` generation, preset management, import/export, and session persistence.
+
+---
+
+# Architecture
+
+TypoScale follows a simple principle:
+
+> Every typography calculation should be deterministic, predictable, and completely independent from the user interface.
+
+All typography calculations are handled by reusable utility functions while the React UI focuses solely on rendering and interaction. Global state is managed with **Zustand** and synchronized with URL query parameters, making every typography configuration easy to bookmark and share.
+
+---
+
+# Extending TypoScale
+
+### Add a New Scale Ratio
+
+Register a new ratio inside:
+
+```text
+src/types/scale.ts
 ```
 
-Open [http://localhost:5173](http://localhost:5173).
-
-### Get a Google Fonts API key
-
-1. Go to [Google Cloud Console](https://console.cloud.google.com)
-2. Create or select a project
-3. Navigate to **APIs & Services → Library**
-4. Search for **Web Fonts Developer API** and enable it
-5. Go to **APIs & Services → Credentials → Create Credentials → API Key**
-6. Copy the key into `.env.local` as `VITE_GOOGLE_FONTS_KEY`
-
-The app works without a key and falls back to a curated list of 28 popular fonts.
-
----
-
-## Deploy
-
-### Vercel (recommended)
-
-```bash
-npm install -g vercel
-vercel --prod
-```
-
-Add `VITE_GOOGLE_FONTS_KEY` under **Settings → Environment Variables** in your Vercel dashboard.
-
-One-click deploy:
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/byllzz/typoscale)
-
----
-
-## Token output examples
-
-### CSS Custom Properties
-```css
-:root {
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Source Sans 3', system-ui, sans-serif;
-  --font-size-base: 1rem;       /* 16px */
-  --font-size-lg: 1.333rem;     /* 21.33px */
-  --font-size-xl: 1.777rem;     /* 28.44px */
-  --font-size-2xl: 2.369rem;    /* 37.90px */
+```ts
+newRatio: {
+  label: "New Ratio",
+  value: 1.618,
 }
 ```
 
-### Tailwind v3
-```js
-module.exports = {
-  theme: {
-    extend: {
-      fontFamily: {
-        display: ['Playfair Display', 'Georgia', 'serif'],
-        body: ['Source Sans 3', 'system-ui', 'sans-serif'],
-      },
-      fontSize: {
-        base: ['1rem',     { lineHeight: '1.5' }],
-        lg:   ['1.333rem', { lineHeight: '1.4' }],
-        xl:   ['1.777rem', { lineHeight: '1.3' }],
-        '2xl':['2.369rem', { lineHeight: '1.2' }],
-      },
-    },
-  },
-}
+### Add a New Export Format
+
+Implement a new generator inside:
+
+```text
+src/utils/tokenGenerators.ts
 ```
 
-### Tailwind v4
-```css
-@import "tailwindcss";
-
-@theme {
-  --font-family-display: 'Playfair Display', Georgia, serif;
-  --font-size-base: 1rem;
-  --font-size-lg:   1.333rem;
-  --font-size-xl:   1.777rem;
-  --font-size-2xl:  2.369rem;
-}
-```
-
-### Style Dictionary JSON
-```json
-{
-  "typography": {
-    "scale": {
-      "base": { "value": "1rem",      "type": "fontSizes" },
-      "lg":   { "value": "1.333rem",  "type": "fontSizes" },
-      "xl":   { "value": "1.777rem",  "type": "fontSizes" }
-    }
-  }
-}
-```
+Once added, it automatically becomes available in the export panel.
 
 ---
 
-## Project structure
+# Project Structure
 
-```
+```text
 typoscale/
 ├── public/
 ├── src/
+│   ├── assets/
 │   ├── components/
-│   │   ├── FontPicker.tsx       # Searchable Google Fonts dropdown
-│   │   ├── ScaleControls.tsx    # Left sidebar — all controls
-│   │   ├── ScaleTable.tsx       # Scale steps table with WCAG badges
-│   │   ├── PreviewPane.tsx      # Editorial live preview
-│   │   ├── TokenOutput.tsx      # Code output with syntax highlight
-│   │   ├── FluidExport.tsx      # clamp()-based fluid typography export
-│   │   ├── WelcomeNote.tsx      # First-visit welcome modal
-│   │   ├── MainArea.tsx         # Right panel layout
-│   │   └── PrismTheme.tsx       # Syntax highlight theme injection
 │   ├── hooks/
-│   │   ├── useFonts.ts          # Google Fonts API + search
-│   │   ├── useTypeScale.ts      # Reactive scale computation
-│   │   └── useClipboard.ts      # Copy to clipboard
-│   ├── utils/
-│   │   ├── scaleAlgorithms.ts   # Pure scale math
-│   │   ├── tokenGenerators.ts   # CSS / Tailwind / JSON output
-│   │   ├── fluidTypography.ts   # clamp() generation
-│   │   └── contrast.ts          # WCAG contrast calculation
 │   ├── store/
-│   │   └── useStore.ts          # Zustand state + URL persistence
 │   ├── types/
-│   │   └── index.ts             # Shared TypeScript types
-│   └── App.tsx
-├── .env.local.example
+│   ├── utils/
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
 ├── package.json
-├── tsconfig.json
 ├── vite.config.ts
-├── tailwind.config.ts
-└── README.md
+└── tsconfig.json
 ```
 
 ---
 
-## Tech stack
+# Directory Overview
 
-| Tool | Purpose |
-|------|---------|
-| [React](https://react.dev/) + [Vite](https://vitejs.dev/) | UI and build tooling |
-| [TypeScript](https://www.typescriptlang.org/) | Type safety throughout |
-| [Tailwind CSS](https://tailwindcss.com/) | Utility-first styling |
-| [Zustand](https://docs.pmnd.rs/zustand) | State management + URL persistence |
-| [Lucide React](https://lucide.dev/) | Icon set |
-| [Vercel](https://vercel.com) | Deployment and hosting |
+- **components/** → Reusable UI components including controls, previews, font pickers, and token output.
+- **hooks/** → Custom hooks for font loading, typography generation, clipboard, and shared logic.
+- **utils/** → Pure functions for scale calculations, token generation, WCAG contrast, and fluid typography.
+- **store/** → Zustand state management with URL synchronization and local persistence.
+- **types/** → Shared TypeScript interfaces and application models.
+- **assets/** → Preview images, icons, and static resources.
 
 ---
 
-## Contributing
+# Design Principles
 
-Contributions are welcome. Please open an issue before starting significant work so we can discuss the approach.
+TypoScale is built around a few core principles:
+
+- **Deterministic Calculations** - Identical inputs always produce identical output.
+- **Pure Functions** - Typography logic remains independent from the UI.
+- **Client-Side First** - Everything runs locally without backend processing.
+- **Shareable State** - URL parameters preserve and share configurations.
+- **Reusable Components** - Modular React components encourage maintainability.
+- **Data-Driven UI** - Scales and export formats are generated from shared configuration.
+
+---
+
+# Performance
+
+TypoScale is optimized for responsive editing and instant feedback.
+
+- Memoized scale generation using `useMemo`
+- Debounced URL synchronization
+- Shared font and ratio registries
+- Local preference persistence
+- Zero network requests during calculations
+
+# Built With
+
+TypoScale is built using a modern frontend stack focused on performance, maintainability, and developer experience.
+
+- React
+- Vite
+- Tailwind CSS v4
+- TypeScript
+- Zustand
+- Lucide React
+- PrismJS
+- Vercel
+
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=react,vite,tailwind,ts,zustand,vercel" />
+</p>
+
+---
+
+# Getting Started
 
 ```bash
-# 1. Fork the repo and clone your fork
-git clone https://github.com/your-fork/typoscale.git
+# Clone the repository
+git clone https://github.com/byllzz/typoscale.git
+
+# Enter the project
 cd typoscale
 
-# 2. Create a feature branch
-git checkout -b feat/your-feature
+# Install dependencies
+npm install
 
-# 3. Make your changes, then run checks
-npm run type-check
-npm run lint
-
-# 4. Commit using conventional commits
-git commit -m "feat(component): short description"
-
-# 5. Push and open a pull request against main
-git push origin feat/your-feature
+# Start the development server
+npm run dev
 ```
 
-### Good first issues
-
-- Adding new scale ratio presets
-- Improving WCAG contrast badge accuracy
-- Adding a fluid type scale preview mode
-- Accessibility improvements (ARIA labels, keyboard nav)
-- Writing unit tests for `scaleAlgorithms.ts` and `tokenGenerators.ts`
-
-### Commit convention
-
-This project uses [Conventional Commits](https://www.conventionalcommits.org/):
-
-| Prefix | When to use |
-|--------|------------|
-| `feat` | New feature |
-| `fix` | Bug fix |
-| `refactor` | Code change that isn't a fix or feature |
-| `style` | Formatting, spacing, visual-only changes |
-| `docs` | Documentation only |
-| `chore` | Build, deps, config |
+> **Optional:** Create a `.env.local` file and add `VITE_GOOGLE_FONTS_KEY` to access the complete Google Fonts library.
 
 ---
 
-## License
+# Token Output
 
-MIT © 2026 - see [LICENSE](LICENSE) for details.
+TypoScale generates production-ready typography tokens in multiple formats.
+
+- CSS Custom Properties
+- Tailwind CSS v3
+- Tailwind CSS v4
+- Style Dictionary JSON
+
+### Example
+
+```css
+:root {
+  --font-size-base: 1rem;
+  --font-size-lg: 1.333rem;
+  --font-size-xl: 1.777rem;
+}
+```
+
+> Copy or download generated tokens and use them directly in your design system.
+
+---
+
+# Contributing
+
+Contributions of every size are welcome.
+
+```bash
+git checkout -b feat/my-feature
+
+npm run lint
+npm run type-check
+```
+
+Please follow the Conventional Commits specification.
+
+```text
+feat: New feature
+fix: Bug fix
+docs: Documentation changes
+refactor: Internal improvements
+style: Formatting updates
+chore: Maintenance tasks
+```
+
+After pushing your branch, open a Pull Request against `main`.
+
+---
+
+# Author
+
+<img src="https://github.com/byllzz.png" width="90" alt="Bilal Malik"/>
+
+## Bilal Malik
+
+[![GitHub](https://img.shields.io/badge/GitHub-byllzz-9B26FF?style=flat&logo=github&logoColor=white)](https://github.com/byllzz)
+[![X](https://img.shields.io/badge/Twitter-@bilalmlkdev-9B26FF?style=flat&logo=x&logoColor=white)](https://x.com/bilalmlkdev)
+[![Portfolio](https://img.shields.io/badge/Portfolio-bilalmlkdev.vercel.app-9B26FF?style=flat&logo=vercel&logoColor=white)](https://bilalmlkdev.vercel.app)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Bilal%20Malik-9B26FF?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/bilalmlkdev/)
+[![Email](https://img.shields.io/badge/Email-bilalmlkdev@gmail.com-9B26FF?style=flat&logo=gmail&logoColor=white)](mailto:bilalmlkdev@gmail.com)
+
+If you enjoyed this project, consider giving it a ⭐ on GitHub. It helps others discover the project and motivates future improvements.
+
+<p align="right">
+  <a href="#texturae">⬆ Back to Top</a>
+</p>
+
+# License (MIT)
+
+This project is licensed under the **MIT License**.
+
+```text
+
+MIT License
+
+Copyright (c) 2026 Bilal Malik
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software.The above copyright notice and this permission notice shall
+be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+© 2026 TypoScale. Licensed under the MIT License.
