@@ -1,76 +1,59 @@
-<p align="center">
+<div align="center">
+
   <a href="https://typoscale.vercel.app/">
-    <img src="./src/assets/preview.png" alt="TypoScale Preview">
+    <img src="https://raw.githubusercontent.com/bilalmlkdev/typoscale/main/src/assets/logo.svg" alt="typoscale Logo" width="100%" height="120">
   </a>
-</p>
 
-<h1 align="center">TypoScale</h1>
+# Typoscale
 
-<p align="center">
-  A modern, open-source type scale generator for designers and developers.
-  Generate harmonious typography systems, pair Google Fonts, and export production-ready
-  CSS & Tailwind tokens from one fast browser-based workspace.
-</p>
+  A modern, open-source type scale generator for designers and developers,
+  generate <br> harmonious typography systems, pair Google Fonts, and export
+  production-ready CSS & Tailwind tokens from one fast browser-based workspace.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Status-Active-9B26FF?style=flat" />
-  <img src="https://img.shields.io/badge/React-Vite-9B26FF?style=flat" />
-  <img src="https://img.shields.io/badge/Tailwind-v4-9B26FF?style=flat" />
-  <img src="https://img.shields.io/badge/TypeScript-Strict-9B26FF?style=flat" />
-  <img src="https://img.shields.io/badge/License-MIT-9B26FF?style=flat" />
-  <img src="https://img.shields.io/badge/Deploy-Vercel-9B26FF?style=flat" />
-</p>
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Site-black?style=for-the-badge)](https://typoscale.vercel.app)
+[![GitHub Stars](https://img.shields.io/github/stars/bilalmlkdev/typoscale?style=for-the-badge&logo=github&color=yellow)](https://github.com/bilalmlkdev/typoscale.git)
+
+</div>
 
 <p align="center">
-  <a href="https://typoscale.vercel.app/">Live Demo</a> •
-  <a href="https://github.com/byllzz/typoscale/issues/new">Report Bug</a> •
-  <a href="https://github.com/byllzz/typoscale/issues/new">Request Feature</a>
+  <i>Created by <a href="https://bilalmlkdev.vercel.app" target="_blank">Bilal Malik</a></i><br>
+  <i>Follow on Github <a href="https://github.com/bilalmlkdev" target="_blank">bilalmlkdev</a></i>
 </p>
 
----
+[![typoscale Dashboard](https://raw.githubusercontent.com/bilalmlkdev/typoscale/main/src/assets/preview.png)](https://typoscale.vercel.app/)
 
-# About
+
+# What is TypoScale?
 
 TypoScale is an open-source type scale generator built for designers and developers creating modern design systems.
 
 Choose a base font size, select a modular ratio, pair Google Fonts, preview typography in real time, and export production-ready tokens for CSS, Tailwind CSS, or Style Dictionary.
 
-Unlike traditional font calculators, TypoScale combines modular scaling, responsive typography, WCAG contrast checking, and live editorial previews into a single workflow.
-
-Everything runs entirely inside your browser with no server-side processing or tracking.
-
----
+Unlike traditional font-size calculators, TypoScale combines modular scaling, responsive typography, WCAG contrast checking, and live editorial previews into a single workflow - and it runs entirely in your browser, with no server-side processing or tracking.
 
 # Features
 
-- **Type Scale Generation** - Modular ratios, custom scales, independent steps, and instant px/rem conversion.
-- **Font Pairing** - Browse 1000+ Google Fonts with dedicated Display, Body, and Monospace selectors.
-- **Live Preview** - Responsive editorial preview with WCAG AA/AAA accessibility indicators.
-- **Token Export** - Export typography tokens as CSS Variables, Tailwind CSS v3/v4, or Style Dictionary JSON.
-- **Developer Experience** - Shareable URLs, dark & light themes, instant copy, and client-side processing.
-- **Utilities** - Fluid `clamp()` generation, preset management, import/export, and session persistence.
-
----
+| Category | Highlights |
+|-----------|------------|
+| **Type Scale Generation** | Modular ratios, custom scales, independent steps, and instant px/rem conversion |
+| **Font Pairing** | Browse 1000+ Google Fonts with dedicated Display, Body, and Monospace selectors |
+| **Live Preview** | Responsive editorial preview with WCAG AA/AAA accessibility indicators |
+| **Token Export** | Export typography tokens as CSS Variables, Tailwind CSS v3/v4, or Style Dictionary JSON |
+| **Shareable State** | Every configuration syncs to the URL, so any scale is bookmarkable and shareable |
+| **Themes** | Dark and light presentation, switchable without losing your current scale |
+| **Utilities** | Fluid `clamp()` generation, preset management, import/export, and session persistence |
 
 # Architecture
 
-TypoScale follows a simple principle:
+TypoScale follows one principle: every typography calculation should be deterministic, predictable, and completely independent from the UI.
 
-> Every typography calculation should be deterministic, predictable, and completely independent from the user interface.
+**Calculations are pure functions, the UI just renders them.** All scale math, font-pairing logic, and token generation live in `src/utils/` as functions with no React or DOM dependency - given the same base size, ratio, and steps, they always produce the same output. The React layer's only job is displaying that output and reacting to input.
 
-All typography calculations are handled by reusable utility functions while the React UI focuses solely on rendering and interaction. Global state is managed with **Zustand** and synchronized with URL query parameters, making every typography configuration easy to bookmark and share.
+**State lives in Zustand, synced to the URL.** The current scale, selected fonts, and export format are held in a Zustand store and mirrored to URL query parameters on every change. That's what makes every configuration shareable as a plain link, with no save button or backend involved.
 
----
+## Adding a New Scale Ratio
 
-# Extending TypoScale
-
-### Add a New Scale Ratio
-
-Register a new ratio inside:
-
-```text
-src/types/scale.ts
-```
+Register it in `src/types/scale.ts`:
 
 ```ts
 newRatio: {
@@ -79,30 +62,22 @@ newRatio: {
 }
 ```
 
-### Add a New Export Format
+## Adding a New Export Format
 
-Implement a new generator inside:
-
-```text
-src/utils/tokenGenerators.ts
-```
-
-Once added, it automatically becomes available in the export panel.
-
----
+Implement a new generator function in `src/utils/tokenGenerators.ts`. Once it's added there, it appears in the export panel automatically - no other file needs to change.
 
 # Project Structure
 
-```text
-typoscale/
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── hooks/
-│   ├── store/
-│   ├── types/
-│   ├── utils/
+```
+typoscale
+├── public
+├── src
+│   ├── assets          preview images, icons, static resources
+│   ├── components       controls, previews, font pickers, token output
+│   ├── hooks             font loading, typography generation, clipboard
+│   ├── store              Zustand state + URL sync + local persistence
+│   ├── types               shared TypeScript interfaces and models
+│   ├── utils                scale math, token generation, WCAG contrast
 │   ├── App.tsx
 │   ├── main.tsx
 │   └── index.css
@@ -111,91 +86,57 @@ typoscale/
 └── tsconfig.json
 ```
 
----
-
-# Directory Overview
-
-- **components/** → Reusable UI components including controls, previews, font pickers, and token output.
-- **hooks/** → Custom hooks for font loading, typography generation, clipboard, and shared logic.
-- **utils/** → Pure functions for scale calculations, token generation, WCAG contrast, and fluid typography.
-- **store/** → Zustand state management with URL synchronization and local persistence.
-- **types/** → Shared TypeScript interfaces and application models.
-- **assets/** → Preview images, icons, and static resources.
-
----
-
 # Design Principles
 
-TypoScale is built around a few core principles:
-
-- **Deterministic Calculations** - Identical inputs always produce identical output.
-- **Pure Functions** - Typography logic remains independent from the UI.
-- **Client-Side First** - Everything runs locally without backend processing.
-- **Shareable State** - URL parameters preserve and share configurations.
-- **Reusable Components** - Modular React components encourage maintainability.
-- **Data-Driven UI** - Scales and export formats are generated from shared configuration.
-
----
+| Principle | Description |
+|-----------|-------------|
+| Deterministic Calculations | Identical inputs always produce identical output |
+| Pure Functions | Typography logic stays fully independent from the UI |
+| Client-Side First | Everything runs locally, no backend processing |
+| Shareable State | URL parameters preserve and share full configurations |
+| Data-Driven UI | Scales and export formats are generated from shared config, not hardcoded |
 
 # Performance
 
-TypoScale is optimized for responsive editing and instant feedback.
+Memoized scale generation (`useMemo`), debounced URL sync, shared font/ratio registries loaded once, local preference persistence, and zero network requests during calculation.
 
-- Memoized scale generation using `useMemo`
-- Debounced URL synchronization
-- Shared font and ratio registries
-- Local preference persistence
-- Zero network requests during calculations
+# Tech Stack
 
-# Built With
-
-TypoScale is built using a modern frontend stack focused on performance, maintainability, and developer experience.
-
-- React
-- Vite
-- Tailwind CSS v4
-- TypeScript
-- Zustand
-- Lucide React
-- PrismJS
-- Vercel
+TypoScale is built using a modern frontend stack focused on performance and developer experience.
 
 <p align="left">
   <img src="https://skillicons.dev/icons?i=react,vite,tailwind,ts,zustand,vercel" />
 </p>
 
----
+Also uses **Lucide React** for icons and **PrismJS** for token code highlighting.
 
 # Getting Started
 
+## Prerequisites
+
+- Node.js 18 or later
+
+## Installation
+
+Clone the repository and move into it.
+
 ```bash
-# Clone the repository
-git clone https://github.com/byllzz/typoscale.git
-
-# Enter the project
+git clone https://github.com/bilalmlkdev/typoscale.git
 cd typoscale
+```
 
-# Install dependencies
+Install dependencies and start the dev server.
+
+```bash
 npm install
-
-# Start the development server
 npm run dev
 ```
 
-> **Optional:** Create a `.env.local` file and add `VITE_GOOGLE_FONTS_KEY` to access the complete Google Fonts library.
-
----
+Optionally, create a `.env.local` file and add `VITE_GOOGLE_FONTS_KEY` to unlock the complete Google Fonts library instead of the default curated subset.
 
 # Token Output
 
-TypoScale generates production-ready typography tokens in multiple formats.
-
-- CSS Custom Properties
-- Tailwind CSS v3
-- Tailwind CSS v4
-- Style Dictionary JSON
-
-### Example
+TypoScale generates production-ready typography tokens in multiple formats: CSS Custom Properties, Tailwind CSS v3, Tailwind CSS v4, or Style Dictionary JSON.
 
 ```css
 :root {
@@ -205,9 +146,17 @@ TypoScale generates production-ready typography tokens in multiple formats.
 }
 ```
 
-> Copy or download generated tokens and use them directly in your design system.
+Copy or download the generated tokens and use them directly in your design system.
 
----
+# Usage
+
+1. Pick a base font size and a modular ratio - or define a fully custom scale.
+2. Choose Display, Body, and Monospace fonts from the Google Fonts picker.
+3. Check the live editorial preview and its WCAG AA/AAA contrast indicators.
+4. Switch export format to CSS, Tailwind v3/v4, or Style Dictionary JSON.
+5. Copy or download the tokens, or copy the URL to share the exact configuration.
+
+If the font picker only shows a small curated list, you're missing `VITE_GOOGLE_FONTS_KEY` - add it to `.env.local` to unlock the full Google Fonts catalog.
 
 # Contributing
 
@@ -215,50 +164,18 @@ Contributions of every size are welcome.
 
 ```bash
 git checkout -b feat/my-feature
-
 npm run lint
 npm run type-check
 ```
 
-Please follow the Conventional Commits specification.
+Please follow Conventional Commits: `feat:`, `fix:`, `docs:`, `refactor:`, `style:`, `chore:`. After pushing your branch, open a pull request against `main`.
 
-```text
-feat: New feature
-fix: Bug fix
-docs: Documentation changes
-refactor: Internal improvements
-style: Formatting updates
-chore: Maintenance tasks
-```
-
-After pushing your branch, open a Pull Request against `main`.
-
----
-
-# Author
-
-<img src="https://github.com/byllzz.png" width="90" alt="Bilal Malik"/>
-
-## Bilal Malik
-
-[![GitHub](https://img.shields.io/badge/GitHub-byllzz-9B26FF?style=flat&logo=github&logoColor=white)](https://github.com/byllzz)
-[![X](https://img.shields.io/badge/Twitter-@bilalmlkdev-9B26FF?style=flat&logo=x&logoColor=white)](https://x.com/bilalmlkdev)
-[![Portfolio](https://img.shields.io/badge/Portfolio-bilalmlkdev.vercel.app-9B26FF?style=flat&logo=vercel&logoColor=white)](https://bilalmlkdev.vercel.app)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Bilal%20Malik-9B26FF?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/bilalmlkdev/)
-[![Email](https://img.shields.io/badge/Email-bilalmlkdev@gmail.com-9B26FF?style=flat&logo=gmail&logoColor=white)](mailto:bilalmlkdev@gmail.com)
-
-If you enjoyed this project, consider giving it a ⭐ on GitHub. It helps others discover the project and motivates future improvements.
-
-<p align="right">
-  <a href="#texturae">⬆ Back to Top</a>
-</p>
 
 # License (MIT)
 
-This project is licensed under the **MIT License**.
+This project is licensed under the MIT License.
 
-```text
-
+```
 MIT License
 
 Copyright (c) 2026 Bilal Malik
@@ -267,7 +184,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software.The above copyright notice and this permission notice shall
+of the Software. The above copyright notice and this permission notice shall
 be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -278,4 +195,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
-© 2026 TypoScale. Licensed under the MIT License.
+

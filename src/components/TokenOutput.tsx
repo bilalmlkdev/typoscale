@@ -158,7 +158,7 @@ export function TokenOutput({ steps }: TokenOutputProps) {
         </div>
 
         <a
-          href="https://github.com/byllzz/typoscale"
+          href="https://github.com/bilalmlkdev/typoscale"
           target="_blank"
           rel="noopener noreferrer"
           className={`text-[11px] font-mono transition-colors duration-200 flex items-center gap-1 ${
