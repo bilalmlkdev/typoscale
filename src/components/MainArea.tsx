@@ -7,7 +7,7 @@ import { ResponsivePreview } from "./ResponsivePreview";
 import { FluidExport } from "./FluidExport";
 import { SCALE_RATIOS } from "../types";
 import { PresetManager } from "./PresetManager";
-import { FileText } from "lucide-react";
+import { FileText, Link2, Check } from "lucide-react";
 
 type ActiveTabType = "preview" | "responsive" | "fluid" | "tokens";
 
@@ -28,9 +28,16 @@ export function MainArea({ onOpenNote }: MainAreaProps) {
   } = useStore();
 
   const [isPresetManagerOpen, setIsPresetManagerOpen] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
   const scaleSteps = useTypeScale({ baseSize, ratio, customRatio, steps });
   const effectiveRatio =
     ratio === "custom" ? customRatio : SCALE_RATIOS[ratio]?.value || 0;
+
+  const handleShareLink = async () => {
+    await navigator.clipboard.writeText(window.location.href);
+    setShareCopied(true);
+    setTimeout(() => setShareCopied(false), 2000);
+  };
 
   return (
     <main
@@ -147,7 +154,7 @@ export function MainArea({ onOpenNote }: MainAreaProps) {
                   ? "border-stone-800 bg-stone-950 hover:border-amber-500/40"
                   : "border-stone-200 bg-stone-50 hover:border-amber-500/40"
               }`}
-              title="Click to execute environment container rebuild"
+              title="Click to toggle dark/light mode"
             >
               <span
                 className={`px-2 py-1.5 font-bold transition-colors ${
@@ -181,6 +188,37 @@ export function MainArea({ onOpenNote }: MainAreaProps) {
               aria-label="Show welcome note"
             >
               <FileText size={16} />
+            </button>
+
+            {/* SHARE LINK BUTTON */}
+            <button
+              onClick={handleShareLink}
+              className={`p-1.5 rounded-lg border transition-all duration-200 flex items-center gap-1.5 ${
+                shareCopied
+                  ? darkMode
+                    ? "bg-green-500/20 border-green-500/30 text-green-400"
+                    : "bg-green-500/20 border-green-500/30 text-green-600"
+                  : darkMode
+                    ? "bg-stone-900 border-stone-800 text-stone-400 hover:text-stone-200 hover:bg-stone-800"
+                    : "bg-white border-stone-200 text-stone-500 hover:text-stone-800 hover:bg-stone-50"
+              }`}
+              aria-label="Copy share link"
+            >
+              {shareCopied ? (
+                <>
+                  <Check size={14} />
+                  <span className="text-[10px] font-medium hidden sm:inline">
+                    Copied!
+                  </span>
+                </>
+              ) : (
+                <>
+                  <Link2 size={14} />
+                  <span className="text-[10px] font-medium hidden sm:inline">
+                    Share
+                  </span>
+                </>
+              )}
             </button>
 
             <a

@@ -41,10 +41,10 @@ export function WelcomeNote({
     : "bg-stone-50 border-stone-200";
   const divider = d ? "border-stone-800" : "border-stone-200";
   const btnBase =
-    "inline-flex items-center gap-1 px-2.5 py-1 rounded text-[11px] font-mono border transition-colors leading-none";
+    "inline-flex items-center gap-1 px-2.5 py-1 rounded text-[11px]  border transition-colors leading-none";
   const btnGhost = `${btnBase} ${d ? "border-stone-700 text-stone-300 hover:bg-stone-800 hover:text-stone-100" : "border-stone-300 text-stone-600 hover:bg-stone-100 hover:text-stone-900"}`;
   const btnPrimary = `${btnBase} ${d ? "bg-stone-100 text-stone-900 border-transparent hover:bg-white" : "bg-stone-900 text-white border-transparent hover:bg-stone-700"}`;
-  const tag = `text-[10px] font-mono px-2 py-0.5 rounded-full border ${d ? "border-stone-700 text-stone-400" : "border-stone-300 text-stone-500"}`;
+  const tag = `text-[10px]  px-2 py-0.5 rounded-full border ${d ? "border-stone-700 text-stone-400" : "border-stone-300 text-stone-500"}`;
 
   const features = [
     {
@@ -83,7 +83,7 @@ export function WelcomeNote({
 
       <div
         className={`fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50
-        w-[95vw] max-w-3xl rounded-lg border shadow-2xl overflow-hidden font-mono ${base}`}
+        w-[95vw] max-w-3xl rounded-lg border shadow-2xl overflow-hidden  ${base}`}
       >
         <button
           onClick={onClose}
@@ -151,7 +151,7 @@ export function WelcomeNote({
                 <code className="text-[12px]">npm install typoscale</code>
                 <button
                   onClick={handleCopy}
-                  className={`text-[11px] font-mono transition-colors ${muted} hover:text-current`}
+                  className={`text-[11px]  transition-colors ${muted} hover:text-current`}
                 >
                   ⎘ copy
                 </button>
@@ -238,7 +238,7 @@ export function WelcomeNote({
             {/* "Don't show again" button */}
             <button
               onClick={onDontShowAgain}
-              className={`mt-4 text-[10px] font-mono transition-colors ${muted} hover:text-current self-start`}
+              className={`mt-4 text-[10px]  transition-colors ${muted} hover:text-current self-start`}
             >
               [ don't show again ]
             </button>
