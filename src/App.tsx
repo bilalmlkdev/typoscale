@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { ScaleControls } from './components/ScaleControls';
-import { MainArea } from './components/MainArea';
-import { PrismTheme } from './components/PrismTheme';
-import { loadGoogleFont } from './hooks/useFonts';
-import { useStore } from './store/useStore';
-import { WelcomeNote } from './components/WelcomeNote';
+import { useEffect, useState } from "react";
+import { ScaleControls } from "./components/ScaleControls";
+import { MainArea } from "./components/MainArea";
+import { PrismTheme } from "./components/PrismTheme";
+import { loadGoogleFont } from "./hooks/useFonts";
+import { useStore } from "./store/useStore";
+import { WelcomeNote } from "./components/WelcomeNote";
 
-const SESSION_KEY = 'typoscale-note-seen';
+const STORAGE_KEY = "typoscale-note-seen";
 
 export default function App() {
   const { displayFont, bodyFont, monoFont, darkMode } = useStore();
@@ -14,25 +14,31 @@ export default function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [isNoteOpen, setIsNoteOpen] = useState(false);
 
-  // Show welcome note once per session; never again until tab is closed
+  // Show welcome note once per browser (persists across tabs)
   useEffect(() => {
-    if (!sessionStorage.getItem(SESSION_KEY)) {
+    const seen = localStorage.getItem(STORAGE_KEY);
+    if (!seen) {
       setIsNoteOpen(true);
-      sessionStorage.setItem(SESSION_KEY, 'true');
+      localStorage.setItem(STORAGE_KEY, "true");
     }
   }, []);
 
   const handleCloseNote = () => {
     setIsNoteOpen(false);
-    // Flag already set on first open; re-setting is a no-op but kept for clarity
-    sessionStorage.setItem(SESSION_KEY, 'true');
+    // Flag already set on first open, keeping it here ensures it stays set
+    localStorage.setItem(STORAGE_KEY, "true");
+  };
+
+  const handleDontShowAgain = () => {
+    setIsNoteOpen(false);
+    localStorage.setItem(STORAGE_KEY, "true");
   };
 
   useEffect(() => {
     if (darkMode) {
-      document.body.classList.remove('light-mode');
+      document.body.classList.remove("light-mode");
     } else {
-      document.body.classList.add('light-mode');
+      document.body.classList.add("light-mode");
     }
   }, [darkMode]);
 
@@ -42,8 +48,8 @@ export default function App() {
       if (window.innerWidth >= 768) setIsSidebarOpen(false);
     };
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useEffect(() => {
@@ -53,8 +59,10 @@ export default function App() {
   }, [displayFont, bodyFont, monoFont]);
 
   useEffect(() => {
-    document.body.style.overflow = isMobile && isSidebarOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    document.body.style.overflow = isMobile && isSidebarOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isMobile, isSidebarOpen]);
 
   return (
@@ -66,13 +74,23 @@ export default function App() {
             onClick={() => setIsSidebarOpen(true)}
             className={`fixed top-4 left-4 z-30 p-2 rounded-lg border transition-colors ${
               darkMode
-                ? 'bg-stone-900 border-stone-700 text-stone-400 hover:text-amber-400'
-                : 'bg-white border-stone-200 text-stone-600 hover:text-amber-600 shadow-sm'
+                ? "bg-stone-900 border-stone-700 text-stone-400 hover:text-amber-400"
+                : "bg-white border-stone-200 text-stone-600 hover:text-amber-600 shadow-sm"
             }`}
             aria-label="Open menu"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
         )}
@@ -88,6 +106,7 @@ export default function App() {
       <WelcomeNote
         isOpen={isNoteOpen}
         onClose={handleCloseNote}
+        onDontShowAgain={handleDontShowAgain}
         darkMode={darkMode}
       />
     </>

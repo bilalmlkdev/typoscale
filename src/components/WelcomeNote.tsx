@@ -11,10 +11,16 @@ import {
 interface WelcomeNoteProps {
   isOpen: boolean;
   onClose: () => void;
+  onDontShowAgain: () => void;
   darkMode: boolean;
 }
 
-export function WelcomeNote({ isOpen, onClose, darkMode }: WelcomeNoteProps) {
+export function WelcomeNote({
+  isOpen,
+  onClose,
+  onDontShowAgain,
+  darkMode,
+}: WelcomeNoteProps) {
   if (!isOpen) return null;
 
   const handleCopy = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -22,10 +28,6 @@ export function WelcomeNote({ isOpen, onClose, darkMode }: WelcomeNoteProps) {
     const btn = e.currentTarget;
     btn.textContent = "✓ copied";
     setTimeout(() => (btn.textContent = "⎘ copy"), 1400);
-  };
-
-  const handleClose = () => {
-    onClose();
   };
 
   const d = darkMode;
@@ -76,7 +78,7 @@ export function WelcomeNote({ isOpen, onClose, darkMode }: WelcomeNoteProps) {
     <>
       <div
         className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
-        onClick={handleClose}
+        onClick={onClose}
       />
 
       <div
@@ -84,7 +86,7 @@ export function WelcomeNote({ isOpen, onClose, darkMode }: WelcomeNoteProps) {
         w-[95vw] max-w-3xl rounded-lg border shadow-2xl overflow-hidden font-mono ${base}`}
       >
         <button
-          onClick={handleClose}
+          onClick={onClose}
           aria-label="Close welcome note"
           className={`absolute top-2.5 right-2.5 z-10 px-1.5 py-0.5 rounded border text-xs transition-colors
             ${
@@ -97,6 +99,7 @@ export function WelcomeNote({ isOpen, onClose, darkMode }: WelcomeNoteProps) {
         </button>
 
         <div className="flex flex-col md:flex-row">
+          {/* LEFT */}
           <div
             className={`flex-1 p-5 flex flex-col gap-2.5 border-b md:border-b-0 md:border-r ${divider}`}
           >
@@ -182,6 +185,7 @@ export function WelcomeNote({ isOpen, onClose, darkMode }: WelcomeNoteProps) {
             </p>
           </div>
 
+          {/* RIGHT */}
           <div className="flex-1 p-5 flex flex-col">
             <p className={`text-[9px] tracking-widest mb-3 ${muted}`}>
               WHAT'S INCLUDED
@@ -230,6 +234,14 @@ export function WelcomeNote({ isOpen, onClose, darkMode }: WelcomeNoteProps) {
                 ),
               )}
             </div>
+
+            {/* "Don't show again" button */}
+            <button
+              onClick={onDontShowAgain}
+              className={`mt-4 text-[10px] font-mono transition-colors ${muted} hover:text-current self-start`}
+            >
+              [ don't show again ]
+            </button>
           </div>
         </div>
       </div>
